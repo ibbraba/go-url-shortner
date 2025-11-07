@@ -11,10 +11,8 @@ import (
 	"github.com/spf13/cobra"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	// Driver SQLite pour GORM
 )
 
-// TODO : variable shortCodeFlag qui stockera la valeur du flag --code
 var shortCodeFlag string
 
 // StatsCmd représente la commande 'stats'
@@ -76,7 +74,6 @@ func init() {
 	cmd2.RootCmd.AddCommand(StatsCmd)
 	//  Définir le flag --code pour la commande stats.
 	StatsCmd.Flags().StringVar(&shortCodeFlag, "code", "", "Code de l'URL courte pour laquelle récupérer les statistiques")
-
 	// Marquer le flag comme requis
 	StatsCmd.MarkFlagRequired("code")
 
