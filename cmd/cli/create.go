@@ -14,6 +14,7 @@ import (
 	"github.com/glebarez/sqlite"
 	"github.com/spf13/cobra"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	// Driver SQLite pour GORM
 )
 
@@ -43,7 +44,9 @@ Exemple:
 
 		// Initialiser la connexion à la base de données SQLite.
 
-		db, err := gorm.Open(sqlite.Open(cfg.Database.Name), &gorm.Config{})
+		db, err := gorm.Open(sqlite.Open(cfg.Database.Name), &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Silent),
+		})
 		if err != nil {
 			log.Fatalf("FATAL: impossible de se connecter à la base SQLite: %v", err)
 		}

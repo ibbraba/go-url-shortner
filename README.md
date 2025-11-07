@@ -167,3 +167,9 @@ Ctrl + C
 ```
 Tu verras des logs confirmant l'arrêt propre du serveur.
 
+
+
+### 6. Point bonus : Supprimer l'erreur Sql record not found  
+Passer le logger en mode silent dans le fichier cmd/cli/create.go
+
+![alt text](image.png)
