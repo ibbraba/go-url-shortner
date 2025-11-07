@@ -44,7 +44,4 @@ basées sur les modèles Go.`,
 
 func init() {
 	cmd2.RootCmd.AddCommand(StatsCmd)
-
-	// TODO : Ajouter la commande à RootCmd
-
 }

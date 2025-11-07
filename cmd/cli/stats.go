@@ -72,14 +72,12 @@ Exemple:
 	},
 }
 
-// init() s'exécute automatiquement lors de l'importation du package.
-// Il est utilisé pour définir les flags que cette commande accepte.
 func init() {
 	cmd2.RootCmd.AddCommand(StatsCmd)
-	// TODO : Définir le flag --code pour la commande stats.
+	//  Définir le flag --code pour la commande stats.
 	StatsCmd.Flags().StringVar(&shortCodeFlag, "code", "", "Code de l'URL courte pour laquelle récupérer les statistiques")
 
-	// TODO Marquer le flag comme requis
+	// Marquer le flag comme requis
 	StatsCmd.MarkFlagRequired("code")
 
 }
