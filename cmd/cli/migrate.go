@@ -6,8 +6,8 @@ import (
 
 	cmd2 "github.com/axellelanca/urlshortener/cmd"
 	"github.com/axellelanca/urlshortener/internal/models"
+	"github.com/glebarez/sqlite"
 	"github.com/spf13/cobra"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -47,5 +47,5 @@ var MigrateCmd = &cobra.Command{
 }
 
 func init() {
-	cmd2.RootCmd.AddCommand(StatsCmd)
+	cmd2.RootCmd.AddCommand(MigrateCmd)
 }

@@ -11,8 +11,8 @@ import (
 var Cfg *config.Config
 
 var RootCmd = &cobra.Command{
-	Use:   "url-shortener",                                              // Définit comment la commande principale doit être appelée (ex: 'gowatcher').
-	Short: "Un service de raccourcissement d'URLs avec API REST et CLI", // Une courte description de la commande, affichée dans l'aide.
+	Use:   "url-shortener",
+	Short: "Un service de raccourcissement d'URLs avec API REST et CLI",
 	Long:  "'url-shortener' est une application complète pour gérer des URLs courtes. Elle inclut un serveur API pour le raccourcissement et la redirection, ainsi qu'une interface en ligne de commande pour l'administration. Utilisez 'url-shortener [command] --help' pour plus d'informations sur une commande.",
 }
 

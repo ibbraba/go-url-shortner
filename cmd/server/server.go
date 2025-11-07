@@ -18,11 +18,9 @@ import (
 	"github.com/axellelanca/urlshortener/internal/repository"
 	"github.com/axellelanca/urlshortener/internal/services"
 	"github.com/axellelanca/urlshortener/internal/workers"
-
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-
+	"github.com/glebarez/sqlite"
 	"github.com/spf13/cobra"
+	"gorm.io/gorm"
 )
 
 // point d'entrée pour lancer le serveur de l'application.
