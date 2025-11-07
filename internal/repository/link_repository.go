@@ -6,9 +6,10 @@ import (
 )
 
 type LinkRepository interface {
-	Add(link *models.Link) error
-	List() ([]models.Link, error)
-	Find(shortcode string) (*models.Link, error)
+	CreateLink(link *models.Link) error
+	GetAllLinks() ([]models.Link, error)
+	GetLinkByShortCode(shortcode string) (*models.Link, error)
+	CountClicksByLinkID(linkID uint) (int, error)
 }
 
 // pour les opérations CRUD sur les liens.
