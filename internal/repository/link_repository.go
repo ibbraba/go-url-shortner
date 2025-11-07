@@ -35,7 +35,7 @@ func (r *GormLinkRepository) CreateLink(link *models.Link) error {
 // Il renvoie gorm.ErrRecordNotFound si aucun lien n'est trouvé avec ce shortCode.
 func (r *GormLinkRepository) GetLinkByShortCode(shortCode string) (*models.Link, error) {
 	var link models.Link
-	if err := r.db.First(&link, shortCode).Error; err != nil {
+	if err := r.db.Where("shortcode = ?", shortCode).First(&link).Error; err != nil {
 		return nil, err
 	}
 	return &link, nil
@@ -55,7 +55,7 @@ func (r *GormLinkRepository) GetAllLinks() ([]models.Link, error) {
 // CountClicksByLinkID compte le nombre total de clics pour un ID de lien donné.
 func (r *GormLinkRepository) CountClicksByLinkID(linkID uint) (int, error) {
 	var count int64 // GORM retourne un int64 pour les comptes
-	if err := r.db.Where("linkID = ?", linkID).Count(&count).Error; err != nil {
+	if err := r.db.Model(&models.Click{}).Where("link_id = ?", linkID).Count(&count).Error; err != nil {
 		return 0, err
 	}
 	// où 'LinkID' correspond à l'ID du lien donné.
