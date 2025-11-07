@@ -1,22 +1,6 @@
 # TP Go Final : URL Shortener
 
-## Objectif du Projet
-Ce TP vous met au défi de construire un service web performant de raccourcissement et de gestion d'URLs en Go. Votre application permettra de transformer une URL longue en une URL courte et unique. Chaque fois qu'une URL courte est visitée, le système redirigera instantanément l'utilisateur vers l'URL originale tout en enregistrant le clic de manière asynchrone, pour ne jamais ralentir la redirection.
 
-Le service inclura également un moniteur pour vérifier périodiquement la disponibilité des URLs longues et notifier tout changement d'état. L'interaction se fera via une API RESTful et une interface en ligne de commande (CLI) complète.
-
-## Connaissances Mobilisées
-Ce projet est une synthèse complète et pratique de tous les concepts abordés durant ce module de Go (normalement il n'y aura pas trop de surprise) :
-
-* Syntaxe Go de base (structs, maps, boucles, conditions, etc.)
-* Concurrence (Goroutines, Channels) pour les tâches asynchrones et non-bloquantes
-* Interfaces CLI avec [Cobra](https://cobra.dev/)
-* Gestion des erreurs
-* Manipulation de données (JSON) pour les APIs
-* APIs RESTful avec le framework web [Gin](https://gin-gonic.com/)
-* Persistance des données avec l'ORM [GORM](https://gorm.io/) et SQLite
-* Gestion de configuration avec [Viper](https://github.com/spf13/viper)
-* Design patterns courants (Repository, Service) pour une architecture propre
 
 
 ## Fonctionnalités Attendues
@@ -41,10 +25,6 @@ Ce projet est une synthèse complète et pratique de tous les concepts abordés 
 * `./url-shortener create --url="https://..."` : Crée une URL courte depuis la ligne de commande.
 * `./url-shortener stats --code="xyz123"` : Affiche les statistiques d'un lien donné.
 * `./url-shortener migrate` : Exécute les migrations GORM pour la base de données.
-6. **Features Avancées (Bonus - si le temps le permet)**
-* URLs personnalisées : Permettre aux utilisateurs de proposer leur propre alias (ex: /mon-alias-perso).
-* Expiration des liens : Les URLs courtes peuvent avoir une durée de vie limitée.
-* Rate limiting : Protection simple par IP pour les créations de liens.
 
 
 ## Architecture du Projet
@@ -89,21 +69,8 @@ url-shortener/
 
 Suivez ces étapes pour mettre en place le projet et tester votre application (quand elle fonctionnera, évidemment).
 
-### 1. Préparation Initiale
 
-1. **Clonez le dépôt :**
-```bash
-git clone https://github.com/axellelanca/urlshortener.git
-cd urlshortener # Naviguez vers le dossier du projet cloné
-```
 
-2. **Téléchargez et nettoyez les dépendances :**
-
-```bash
-go mod tidy
-```
-
-## Pour tester votre projet :
 
 ### Construisez l'exécutable :
 Ceci compile votre application et crée un fichier url-shortener à la racine du projet.
@@ -200,20 +167,3 @@ Ctrl + C
 ```
 Tu verras des logs confirmant l'arrêt propre du serveur.
 
-## Barème de Notation (/20)
-
-### 1. Robustesse Technique & Fonctionnelle (12 points)
-* 1 point : Le projet se lance via ./url-shortener run-server.
-* 4 points : Implémentation correcte de la redirection non-bloquante (GET /{shortCode}) avec utilisation efficace des goroutines et channels pour les analytics.
-* 2 points : Le moniteur d'URLs fonctionne correctement, vérifie les URLs périodiquement et génère des notifications logiques.
-* 3 points : Toutes les APIs REST et commandes CLI obligatoires (create, stats, migrate) sont fonctionnelles et robustes.
-* 2 points : Gestion des erreurs pertinentes.
-### 2. Qualité du Code & Documentation (2 points)
-* 2 points : Code propre, lisible, **bien commenté** et code respectant les conventions Go vu en cours, et README pertinent.
-* 2 points : Organisation des commits Git avec des messages clairs et pertinents.
-### 3. Entretien Technique (4 points)
-* 2 points : En Groupe :  Votre capacité à expliquer et à défendre votre code lors d'un entretien individuel/en groupe. Cela inclut la compréhension de l'architecture, l'explication du fonctionnement asynchrone (workers, moniteur), et votre capacité à répondre aux questions techniques sur votre code. Vous devrez être capables de naviguer dans votre projet et de justifier vos choix.
-* 2 points : Questions individuelles
-### 4. Points faciles
-* 1 point si votre code compile
-* 1 point si vous faites des erreurs personnalisées

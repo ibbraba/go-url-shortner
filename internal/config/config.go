@@ -6,9 +6,8 @@ import (
 	"github.com/spf13/viper" // La bibliothèque pour la gestion de configuration
 )
 
-// TODO Créer Config qui est la structure principale qui mappe l'intégralité de la configuration de l'application.
-// Les tags `mapstructure` sont utilisés par Viper pour mapper les clés du fichier de config
-// (ou des variables d'environnement) aux champs de la structure Go.
+// Structure principale qui mappe l'intégralité de la configuration de l'application.
+
 type Config struct {
 	Server struct {
 		Port    int    `mapstructure:"port"`
@@ -46,12 +45,12 @@ func LoadConfig() (*Config, error) {
 	viper.SetDefault("analytics.worker_count", 5)
 	viper.SetDefault("monitor.interval_minutes", 5)
 
-	// TODO : Lire le fichier de configuration.
+	// Lis le fichier de configuration.
 	if err := viper.ReadInConfig(); err != nil {
 		log.Printf("Avertissement: Impossible de lire le fichier de configuration, utilisation des valeurs par défaut. Détail: %v", err)
 	}
 
-	// TODO 4: Démapper (unmarshal) la configuration lue (ou les valeurs par défaut) dans la structure Config.
+	//  Démappe  la configuration lue (ou les valeurs par défaut) dans la structure Config.
 	var cfg Config
 	if err := viper.Unmarshal(&cfg); err != nil {
 		log.Printf("Erreur: Impossible de démapper la configuration. Détail: %v", err)

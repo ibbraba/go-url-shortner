@@ -31,8 +31,7 @@ var RunServerCmd = &cobra.Command{
 			démarre les workers asynchrones pour les clics et le moniteur d'URLs,
 			puis lance le serveur HTTP.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO : créer une variable qui stock la configuration chargée globalement via cmd.cfg
-		// Ne pas oublier la gestion d'erreur et faire un fatalF
+		// Crée une variable qui stock la configuration chargée globalement via cmd.cfg
 		cfg := cmd2.Cfg
 		if cfg == nil {
 			log.Fatal("FATAL: la configuration n'a pas pu être chargée.")

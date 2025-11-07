@@ -34,8 +34,7 @@ var MigrateCmd = &cobra.Command{
 
 		defer sqlDB.Close()
 
-		// TODO 3: Exécuter les migrations automatiques de GORM.
-		// Utilisez db.AutoMigrate() et passez-lui les pointeurs vers tous vos modèles.
+		// Exécute les migrations automatiques de GORM.
 		err = db.AutoMigrate(&models.Link{}, &models.Click{})
 		if err != nil {
 			log.Fatalf("FATAL: impossible d'exécuter les migrations: %v", err)
