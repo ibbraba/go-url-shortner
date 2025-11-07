@@ -19,9 +19,6 @@ import (
 
 var longURLFlag string
 
-// TODO : Faire une variable longURLFlag qui stockera la valeur du flag --url
-
-// CreateCmd représente la commande 'create'
 var CreateCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Crée une URL courte à partir d'une URL longue.",
@@ -72,9 +69,9 @@ Exemple:
 			os.Exit(1)
 		}
 
-		fullShortURL := fmt.Sprintf("%s/%s", cfg.Server.BaseURL, link.ShortCode)
+		fullShortURL := fmt.Sprintf("%s/%s", cfg.Server.BaseURL, link.Shortcode)
 		fmt.Printf("URL courte créée avec succès:\n")
-		fmt.Printf("Code: %s\n", link.ShortCode)
+		fmt.Printf("Code: %s\n", link.Shortcode)
 		fmt.Printf("URL complète: %s\n", fullShortURL)
 	},
 }

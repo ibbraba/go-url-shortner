@@ -51,10 +51,7 @@ Exemple:
 		linkRepo := repository.NewLinkRepository(db)
 		linkService := services.NewLinkService(linkRepo)
 
-		// TODO 5: Appeler GetLinkStats pour récupérer le lien et ses statistiques.
-		// Attention, la fonction retourne 3 valeurs
-		// Pour l'erreur, utilisez gorm.ErrRecordNotFound
-		// Si erreur, os.Exit(1)
+		// Récupérer les statistiques du lien via le service
 		link, totalClicks, err := linkService.GetLinkStats(shortCodeFlag)
 		if err != nil {
 			if err == gorm.ErrRecordNotFound {
@@ -64,7 +61,7 @@ Exemple:
 			os.Exit(1)
 		}
 
-		fmt.Printf("Statistiques pour le code court: %s\n", link.ShortCode)
+		fmt.Printf("Statistiques pour le code court: %s\n", link.Shortcode)
 		fmt.Printf("URL longue: %s\n", link.LongURL)
 		fmt.Printf("Total de clics: %d\n", totalClicks)
 	},
