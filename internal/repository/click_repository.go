@@ -9,9 +9,8 @@ import (
 // de rester indépendante de l'implémentation spécifique de la base de données.
 // Implémenter l'interface avec les méthodes nécessaires.
 type ClickRepository interface {
-	Add(link *models.Click) error
-	List() ([]models.Click, error)
-	Find(LinkID uint) (*models.Click, error)
+	CreateClick(click *models.Click) error
+	CountClicksByLinkID(LinkID uint) (int, error)
 	// Utilisé par LinkService pour les stats
 }
 
