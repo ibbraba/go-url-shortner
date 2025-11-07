@@ -83,6 +83,12 @@ func (m *UrlMonitor) checkUrls() {
 			log.Printf("[NOTIFICATION] Le lien %s (%s) est passé de %s à %s !",
 				link.ShortCode, link.LongURL, formatState(previousState), formatState(currentState))
 		}
+
+		if !currentState && previousState {
+			log.Printf("[NOTIFICATION] L'URL %s (%s) est maintenant INACCESSIBLE.", link.ShortCode, link.LongURL)
+		} else if currentState && !previousState {
+			log.Printf("[NOTIFICATION] L'URL %s (%s) est maintenant ACCESSIBLE.", link.ShortCode, link.LongURL)
+		}
 	}
 
 	log.Println("[MONITOR] Vérification de l'état des URLs terminée.")
