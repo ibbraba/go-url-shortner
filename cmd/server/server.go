@@ -44,6 +44,12 @@ var RunServerCmd = &cobra.Command{
 			log.Fatalf("FATAL: impossible de se connecter à la base SQLite: %v", err)
 		}
 
+		// S'assurer que les tables requises existent avant de lancer les différents services
+		if err := db.AutoMigrate(&models.Link{}, &models.Click{}); err != nil {
+			log.Fatalf("FATAL: impossible d'exécuter les migrations automatiques: %v", err)
+		}
+		log.Println("Base de données migrée.")
+
 		//  Initialiser les repositories.
 		linkRepo := repository.NewLinkRepository(db)
 		clickRepo := repository.NewClickRepository(db)
