@@ -2,6 +2,7 @@ package workers
 
 import (
 	"log"
+	"time"
 
 	"github.com/axellelanca/urlshortener/internal/models"
 	"github.com/axellelanca/urlshortener/internal/repository" // Nécessaire pour interagir avec le ClickRepository
@@ -22,22 +23,34 @@ func StartClickWorkers(workerCount int, clickEventsChan <-chan models.ClickEvent
 // Elle tourne indéfiniment, lisant les événements de clic dès qu'ils sont disponibles dans le channel.
 func clickWorker(clickEventsChan <-chan models.ClickEvent, clickRepo repository.ClickRepository) {
 	for event := range clickEventsChan { // Boucle qui lit les événements du channel
-		// TODO 1: Convertir le 'ClickEvent' (reçu du channel) en un modèle 'models.Click'.
+		//  Convertir le 'ClickEvent' (reçu du channel) en un modèle 'models.Click'.
+		click := &models.Click{
+			LinkID:    event.LinkID,
+			UserAgent: event.UserAgent,
+			IPAddress: event.IpAddress,
+			Timestamp: event.Timestamp,
+		}
 
-		// TODO 2: Persister le clic en base de données via le 'clickRepo' (CreateClick).
+		// Persister le clic en base de données via le 'clickRepo' (CreateClick).
 		// Implémentez ici une gestion d'erreur simple : loggez l'erreur si la persistance échoue.
 		// Pour un système en production, une logique de retry
+		maxRetries := 3
+		retryDelay := time.Millisecond * 200
+		var err error
+		for i := 1; i <= maxRetries; i++ {
+			err = clickRepo.CreateClick(click)
+			if err == nil {
+				log.Printf("Click recorded successfully for LinkID %d", event.LinkID)
+				break // ✅ Success
+			}
 
-		if err != nil {
-			// Si une erreur se produit lors de l'enregistrement, logguez-la.
-			// L'événement est "perdu" pour ce TP, mais dans un vrai système,
-			// vous pourriez le remettre dans une file de retry ou une file d'erreurs.
-			log.Printf("ERROR: Failed to save click for LinkID %d (UserAgent: %s, IP: %s): %v",
-				event.LinkID, event.UserAgent, event.IPAddress, err)
+			if i == maxRetries {
+				log.Printf("ERROR: Failed to save click after %d attempts: %v", maxRetries, err)
+			} else {
+				log.Printf("WARN: Failed to save click (attempt %d/%d): %v", i, maxRetries, err)
+			}
+			time.Sleep(retryDelay)
 
-		} else {
-			// Log optionnel pour confirmer l'enregistrement (utile pour le débogage)
-			log.Printf("Click recorded successfully for LinkID %d", event.LinkID)
 		}
 	}
 }

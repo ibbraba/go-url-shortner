@@ -76,7 +76,6 @@ func init() {
 	cmd2.RootCmd.AddCommand(StatsCmd)
 	//  Définir le flag --code pour la commande stats.
 	StatsCmd.Flags().StringVar(&shortCodeFlag, "code", "", "Code de l'URL courte pour laquelle récupérer les statistiques")
-
 	// Marquer le flag comme requis
 	StatsCmd.MarkFlagRequired("code")
 
