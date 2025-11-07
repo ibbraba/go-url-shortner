@@ -17,6 +17,7 @@ import (
 	"github.com/axellelanca/urlshortener/internal/monitor"
 	"github.com/axellelanca/urlshortener/internal/repository"
 	"github.com/axellelanca/urlshortener/internal/services"
+	"github.com/axellelanca/urlshortener/internal/workers"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -54,25 +55,22 @@ var RunServerCmd = &cobra.Command{
 
 		//  Initialiser les services métiers.
 		linkService := services.NewLinkService(linkRepo)
-		clickService := services.NewClickService(clickRepo)
 
 		// Laissez le log
 		log.Println("Services métiers initialisés.")
 
-		// Initialiser le channel ClickEventsChannel (api/handlers) des événements de clic et lancer les workers (StartClickWorkers).
-		// Le channel est bufferisé avec la taille configurée.
+		// Initialisation du channel ClickEventsChannel
 		clickEventsChannel := make(chan models.ClickEvent, cfg.Analytics.WorkerCount)
-		// Passez le channel et le clickRepo aux workers.
+		workers.StartClickWorkers(cfg.Analytics.WorkerCount, clickEventsChannel, clickRepo)
 
 		log.Printf("Channel d'événements de clic initialisé avec un buffer de %d. %d worker(s) de clics démarré(s).",
 			cfg.Analytics.BufferSize, cfg.Analytics.WorkerCount)
 
-		// TODO : Initialiser et lancer le moniteur d'URLs.
+		// Lancement du moniteur d'URLs.
 		// Utilisez l'intervalle configuré
 		monitorInterval := time.Duration(cfg.Monitor.IntervalMinutes) * time.Minute
 		urlMonitor := monitor.NewUrlMonitor(linkRepo, monitorInterval)
 
-		// TODO Lancez le moniteur dans sa propre goroutine.
 		go urlMonitor.Start()
 		log.Printf("Moniteur d'URLs démarré avec un intervalle de %v.", monitorInterval)
 
@@ -91,8 +89,7 @@ var RunServerCmd = &cobra.Command{
 			Handler: router,
 		}
 
-		// TODO : Démarrer le serveur Gin dans une goroutine anonyme pour ne pas bloquer.
-		// Pensez à logger des ptites informations...
+		// Demarrage serveur Gin
 		go func() {
 			log.Printf("Démarrage du serveur HTTP sur %s...", serverAddr)
 			if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
@@ -101,7 +98,6 @@ var RunServerCmd = &cobra.Command{
 		}()
 
 		// Gére l'arrêt propre du serveur (graceful shutdown).
-		// TODO Créez un channel pour les signaux OS (SIGINT, SIGTERM), bufferisé à 1.
 		quit := make(chan os.Signal, 1)
 
 		signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM) // Attendre Ctrl+C ou signal d'arrêt
@@ -110,7 +106,6 @@ var RunServerCmd = &cobra.Command{
 		<-quit
 		log.Println("Signal d'arrêt reçu. Arrêt du serveur...")
 
-		// Arrêt propre du serveur HTTP avec un timeout.
 		log.Println("Arrêt en cours... Donnez un peu de temps aux workers pour finir.")
 		time.Sleep(5 * time.Second)
 

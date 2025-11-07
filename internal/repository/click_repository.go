@@ -10,7 +10,7 @@ import (
 // Implémenter l'interface avec les méthodes nécessaires.
 type ClickRepository interface {
 	CreateClick(click *models.Click) error
-	CountClicksByLinkID(LinkID uint) (int, error)
+	CountClicksByLinkID(linkID uint) (int, error)
 	// Utilisé par LinkService pour les stats
 }
 
