@@ -9,7 +9,6 @@ import (
 	"github.com/spf13/cobra"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	// Driver SQLite pour GORM
 )
 
 // MigrateCmd représente la commande 'migrate'

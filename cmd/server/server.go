@@ -22,11 +22,9 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/spf13/cobra"
-	// Driver SQLite pour GORM
 )
 
-// RunServerCmd représente la commande 'run-server' de Cobra.
-// C'est le point d'entrée pour lancer le serveur de l'application.
+// point d'entrée pour lancer le serveur de l'application.
 var RunServerCmd = &cobra.Command{
 	Use:   "run-server",
 	Short: "Lance le serveur API de raccourcissement d'URLs et les processus de fond.",
@@ -37,6 +35,9 @@ var RunServerCmd = &cobra.Command{
 		// TODO : créer une variable qui stock la configuration chargée globalement via cmd.cfg
 		// Ne pas oublier la gestion d'erreur et faire un fatalF
 		cfg := cmd2.Cfg
+		if cfg == nil {
+			log.Fatal("FATAL: la configuration n'a pas pu être chargée.")
+		}
 
 		// Initialiser la connexion à la bBDD
 		db, err := gorm.Open(sqlite.Open(cfg.Database.Name), &gorm.Config{})

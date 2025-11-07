@@ -11,10 +11,8 @@ import (
 	"github.com/spf13/cobra"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	// Driver SQLite pour GORM
 )
 
-// TODO : variable shortCodeFlag qui stockera la valeur du flag --code
 var shortCodeFlag string
 
 // StatsCmd représente la commande 'stats'
