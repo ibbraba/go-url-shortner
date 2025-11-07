@@ -37,16 +37,14 @@ puis lance le serveur HTTP.`,
 			log.Fatalf("FATAL: Échec de l'obtention de la base de données SQL sous-jacente: %v", err)
 		}
 
-		// TODO : Initialiser les repositories.
-		// Créez des instances de GormLinkRepository et GormClickRepository.
+		//  Initialiser les repositories.
 		linkRepo := repository.GormLinkRepository(sqlDB)
 		clickRepo := repository.GormClickRepository(sqlDB)
 
 		// Laissez le log
 		log.Println("Repositories initialisés.")
 
-		// TODO : Initialiser les services métiers.
-		// Créez des instances de LinkService et ClickService, en leur passant les repositories nécessaires.
+		//  Initialiser les services métiers.
 		linkService := services.NewLinkService(linkRepo)
 		clickService := services.NewClickService(clickRepo)
 

@@ -30,7 +30,6 @@ var CreateCmd = &cobra.Command{
 Exemple:
   url-shortener create --url="https://www.google.com/search?q=go+lang"`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO 1: Valider que le flag --url a été fourni.
 		if longURLFlag == "" {
 			fmt.Println("Erreur: le flag --url est requis.")
 			os.Exit(1)
@@ -42,10 +41,10 @@ Exemple:
 			os.Exit(1)
 		}
 
-		// TODO : Charger la configuration chargée globalement via cmd.cfg
+		// Charger la configuration chargée globalement via cmd.cfg
 		cfg := cmd2.Cfg
 
-		// TODO : Initialiser la connexion à la base de données SQLite.
+		// Initialiser la connexion à la base de données SQLite.
 
 		db, err := gorm.Open(sqlite.Open(cfg.Database.Name), &gorm.Config{})
 		if err != nil {
@@ -61,12 +60,12 @@ Exemple:
 		// Ferme la connexion à la fin
 		defer sqlDB.Close()
 
-		// TODO : Initialiser les repositories et services nécessaires NewLinkRepository & NewLinkService
+		//  Initialiser les repositories et services nécessaires NewLinkRepository & NewLinkService
 
 		linkRepo := repository.NewLinkRepository(db)
 		linkService := services.NewLinkService(linkRepo)
 
-		// TODO : Appeler le LinkService et la fonction CreateLink pour créer le lien court.
+		//  Appeler le LinkService et la fonction CreateLink pour créer le lien court.
 		link, err := linkService.CreateLink(longURLFlag)
 		if err != nil {
 			log.Fatalf("FATAL: Échec de la création du lien court: %v", err)

@@ -33,7 +33,7 @@ Exemple:
 			os.Exit(1)
 		}
 
-		// TODO : Charger la configuration chargée globalement via cmd.cfg
+		//  Charger la configuration chargée globalement via cmd.cfg
 		cfg := cmd2.Cfg
 
 		db, err := gorm.Open(sqlite.Open(cfg.Database.Name), &gorm.Config{})
@@ -49,7 +49,7 @@ Exemple:
 
 		defer sqlDB.Close()
 
-		// TODO : Initialiser les repositories et services nécessaires NewLinkRepository & NewLinkService
+		//  Initialiser les repositories et services nécessaires NewLinkRepository & NewLinkService
 		linkRepo := repository.NewLinkRepository(db)
 		linkService := services.NewLinkService(linkRepo)
 
